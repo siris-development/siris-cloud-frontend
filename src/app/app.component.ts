@@ -1,11 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core'
+import { CommonModule } from '@angular/common';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  standalone: false,
-  styleUrl: './app.component.css'
+  imports: [CommonModule, RouterOutlet],
 })
-export class AppComponent {
-  title = 'supabase-angular';
+export class AppComponent implements OnInit {
+  title = 'angular-user-management'
+  session: any;
+
+  constructor() {}
+
+  ngOnInit() {}
 }

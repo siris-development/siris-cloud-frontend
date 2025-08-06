@@ -3,6 +3,13 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "useDefineForClassFields": false,
+    "paths": {
+      "@/*": ["./src/app/*"],
+      "@auth/*": ["./src/app/auth/*"],
+      "@dashboard/*": ["./src/app/dashboard/*"],
+      "@shared/*": ["./src/app/shared/*"],
+    },
     "outDir": "./dist/out-tsc",
     "strict": true,
     "noImplicitOverride": true,
@@ -22,6 +29,7 @@
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-    "strictTemplates": true
+    "strictTemplates": true,
+    "controlFlow": true
   }
 }

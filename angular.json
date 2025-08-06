@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "supabase-angular": {
+    "siris-cloud": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -23,7 +23,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/supabase-angular",
+            "outputPath": "dist/siris-cloud",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -69,10 +69,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "supabase-angular:build:production"
+              "buildTarget": "siris-cloud:build:production"
             },
             "development": {
-              "buildTarget": "supabase-angular:build:development"
+              "buildTarget": "siris-cloud:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -102,5 +102,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

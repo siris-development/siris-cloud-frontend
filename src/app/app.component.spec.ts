@@ -16,16 +16,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'supabase-angular'`, () => {
+  it(`should have as title 'siris-cloud'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('supabase-angular');
+    expect(app.title).toEqual('siris-cloud');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, supabase-angular');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, siris-cloud');
   });
 });
