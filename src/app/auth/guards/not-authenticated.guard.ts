@@ -16,5 +16,5 @@ import { AuthService } from '../auth.service';
     return false;
   } else {
     return true;
-  } 
+  }
 };

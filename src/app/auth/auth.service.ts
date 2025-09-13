@@ -35,8 +35,6 @@ export class AuthService {
   user = computed(() => this._user());
   token = computed(this._token);
 
-  constructor() {}
-
   login(email: string, password: string) {
     return this.http.post<SupabaseAuthResponse>(`${environment.baseUrl}/auth/login`, { email, password })
     .pipe(
@@ -45,6 +43,7 @@ export class AuthService {
     )
   }
 
+  //TODO: Arreglar método
   checkStatus(): Observable<boolean> {
     const token = localStorage.getItem('token');
     if (!token) {

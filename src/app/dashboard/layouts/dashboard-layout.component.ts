@@ -13,8 +13,4 @@ import { SidebarComponent } from "@/shared/components/sidebar/sidebar.component"
 export class DashboardLayoutComponent {
   authService = inject(AuthService);
   router = inject(Router);
-
-  async signOut() {
-    this.router.navigate(['/']);
-  }
 }

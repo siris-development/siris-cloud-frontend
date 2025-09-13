@@ -10,7 +10,7 @@ export const routes: Routes = [
     ],
   },
   {
-    path: 'dashboard',
+    path: '',
     loadChildren: () => import('./dashboard/dashboard.routes').then(m => m.dashboardRoutes),
   }
 ];
