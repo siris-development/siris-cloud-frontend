@@ -1,0 +1,44 @@
+/* Estilos específicos para el componente de External IPs */
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Estilos para modales */
+.modal-backdrop {
+  backdrop-filter: blur(4px);
+}
+
+/* Estilos para tablas responsivas */
+.table-responsive {
+  overflow-x: auto;
+}
+
+/* Estilos para estados de conexión */
+.status-connected {
+  color: #10b981;
+  background-color: #d1fae5;
+}
+
+.status-disconnected {
+  color: #ef4444;
+  background-color: #fee2e2;
+}
+
+.status-error {
+  color: #ef4444;
+  background-color: #fee2e2;
+}
+
+.status-unknown {
+  color: #6b7280;
+  background-color: #f3f4f6;
+}

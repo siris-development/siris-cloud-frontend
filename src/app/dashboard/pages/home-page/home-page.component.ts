@@ -1,9 +1,14 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { TenantInfoComponent } from '../../../shared/components/tenant-info/tenant-info.component';
+import { AuthService } from '../../../auth/auth.service';
 
 @Component({
   selector: 'app-home',
-  imports: [],
+  imports: [CommonModule, TenantInfoComponent],
   templateUrl: './home-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomePageComponent { }
+export class HomePageComponent {
+  authService = inject(AuthService);
+}

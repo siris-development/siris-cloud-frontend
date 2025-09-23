@@ -9,6 +9,8 @@ import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/
 import { routes } from './app.routes';
 import { loggingInterceptor } from './shared/components/interceptors/logging.interceptor';
 import { authInterceptor } from './auth/interceptors/auth.interceptor';
+import { errorInterceptor } from './shared/interceptors/error.interceptor';
+import { healthcareProviderAuthInterceptor } from './shared/interceptors/healthcare-provider-auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,6 +21,6 @@ export const appConfig: ApplicationConfig = {
         skipInitialTransition: true,
       })
     ),
-    provideHttpClient(withFetch(), withInterceptors([loggingInterceptor, authInterceptor])),
+    provideHttpClient(withFetch(), withInterceptors([errorInterceptor, loggingInterceptor, authInterceptor, healthcareProviderAuthInterceptor])),
   ],
 };

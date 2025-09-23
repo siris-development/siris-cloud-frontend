@@ -19,6 +19,14 @@ export const authRoutes: Routes = [
         loadComponent: () => import('./pages/confirm-email/confirm-email-page.component').then(m => m.ConfirmEmailPageComponent),
       },
       {
+        path: 'forgot-password',
+        loadComponent: () => import('./pages/forgot-password/forgot-password-page.component').then(m => m.ForgotPasswordPageComponent),
+      },
+      {
+        path: 'resend-confirmation',
+        loadComponent: () => import('./pages/resend-confirmation/resend-confirmation-page.component').then(m => m.ResendConfirmationPageComponent),
+      },
+      {
         path: '**',
         redirectTo: 'login',
       }

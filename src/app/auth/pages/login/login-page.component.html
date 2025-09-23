@@ -45,27 +45,41 @@
     </div>
 
     <button type="submit"
-      class="flex items-center justify-center px-6 py-3 rounded-lg font-semibold bg-black text-white shadow-md transition disabled:opacity-60 disabled:cursor-not-allowed hover:bg-gray-800"
+      class="flex items-center justify-center px-6 py-3 rounded-lg font-semibold bg-black text-white shadow-md transition disabled:opacity-60 disabled:cursor-not-allowed hover:bg-gray-800 cursor-pointer"
       id="registerBtn" [disabled]="loading()">
       {{ loading() ? 'Cargando' : 'Iniciar sesión' }}
     </button>
   </form>
 
+  <!-- Enlaces de ayuda -->
+  <div class="text-center mt-4 space-y-2">
+    <div>
+      <button 
+        type="button" 
+        class="text-blue-600 hover:text-blue-800 text-sm font-medium hover:underline cursor-pointer"
+        [routerLink]="['/auth/forgot-password']"
+      >
+        ¿Olvidaste tu contraseña?
+      </button>
+    </div>
+    @if (showResendConfirmation()) {
+      <div>
+        <button 
+          type="button" 
+          class="text-blue-600 hover:text-blue-800 text-sm font-medium hover:underline cursor-pointer"
+          [routerLink]="['/auth/resend-confirmation']"
+        >
+          ¿No recibiste el código de confirmación?
+        </button>
+      </div>
+    }
+  </div>
+
   <div class="flex items-center justify-center mt-8 gap-2">
     <span class="text-gray-400 text-sm">¿No tienes una cuenta?</span>
-    <button type="button" class="text-black hover:underline text-sm font-semibold" [routerLink]="['/auth/register']">
+    <button type="button" class="text-black hover:underline text-sm font-semibold cursor-pointer" [routerLink]="['/auth/register']">
       Crear cuenta
     </button>
   </div>
 </div>
 
-@if(hasError()) {
-<div role="alert"
-  class="animate-fadeIn fixed bottom-5 right-5 w-52 bg-red-100 text-red-800 border border-red-300 rounded-lg p-4 shadow-md">
-  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
-    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-      d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-  </svg>
-  <span>Por favor revise la información ingresada.</span>
-</div>
-}

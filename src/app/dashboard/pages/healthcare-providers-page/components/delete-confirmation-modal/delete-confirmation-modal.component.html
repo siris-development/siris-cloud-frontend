@@ -1,0 +1,108 @@
+<!-- Modal de confirmación de eliminación -->
+@if (isOpen()) {
+  <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white rounded-xl shadow-2xl max-w-md w-full mx-4 transform transition-all duration-300 ease-out">
+      <!-- Header del modal -->
+      <div class="px-6 py-4 border-b border-gray-200 bg-red-50">
+        <div class="flex items-center space-x-3">
+          <div class="flex-shrink-0">
+            <div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
+              <svg class="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L4.268 19.5c-.77.833.192 2.5 1.732 2.5z"></path>
+              </svg>
+            </div>
+          </div>
+          <div class="flex-1">
+            <h3 class="text-lg font-semibold text-red-900">Confirmar Eliminación</h3>
+            <p class="text-sm text-red-700">Esta acción no se puede deshacer</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contenido del modal -->
+      <div class="px-6 py-4">
+        <div class="space-y-4">
+          <!-- Información del proveedor -->
+          <div class="bg-gray-50 rounded-lg p-4">
+            <div class="flex items-start space-x-3">
+              <div class="flex-shrink-0">
+                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                  <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                  </svg>
+                </div>
+              </div>
+              <div class="flex-1 min-w-0">
+                <h4 class="text-sm font-medium text-gray-900 truncate">{{ providerName }}</h4>
+                @if (providerIdentifier) {
+                  <p class="text-xs text-gray-500 mt-1">ID: {{ providerIdentifier }}</p>
+                }
+              </div>
+            </div>
+          </div>
+
+          <!-- Mensaje de confirmación -->
+          <div class="text-center">
+            <p class="text-gray-700">
+              ¿Está seguro de que desea eliminar 
+              <span class="font-semibold text-gray-900">"{{ providerName }}"</span>?
+            </p>
+          </div>
+
+          <!-- Advertencia sobre configuraciones -->
+          @if (hasConfigurations) {
+            <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+              <div class="flex items-start space-x-2">
+                <svg class="w-5 h-5 text-yellow-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L4.268 19.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                </svg>
+                <div>
+                  <p class="text-sm font-medium text-yellow-800">Advertencia</p>
+                  <p class="text-sm text-yellow-700 mt-1">
+                    Este proveedor tiene {{ configurationsCount }} configuración(es) asociada(s). 
+                    Al eliminar el proveedor, también se eliminarán todas sus configuraciones.
+                  </p>
+                </div>
+              </div>
+            </div>
+          }
+
+          <!-- Mensaje final -->
+          <div class="text-center">
+            <p class="text-sm text-gray-600">
+              Esta acción es <span class="font-semibold text-red-600">irreversible</span>.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer con botones -->
+      <div class="px-6 py-4 bg-gray-50 rounded-b-xl">
+        <div class="flex justify-end space-x-3">
+          <button
+            type="button"
+            (click)="closeModal()"
+            [disabled]="loading()"
+            class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200">
+            Cancelar
+          </button>
+          <button
+            type="button"
+            (click)="confirmDelete()"
+            [disabled]="loading()"
+            class="px-4 py-2 text-sm font-medium text-white bg-red-600 border border-transparent rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 flex items-center space-x-2">
+            @if (loading()) {
+              <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+              <span>Eliminando...</span>
+            } @else {
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+              </svg>
+              <span>Eliminar</span>
+            }
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+}

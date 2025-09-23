@@ -26,6 +26,21 @@ export const dashboardRoutes: Routes = [
         loadComponent: () => import('./pages/whatsapp-page/whatsapp-page.component').then(m => m.WhatsAppPageComponent)
       },
       {
+        path: 'agentes-citas',
+        title: 'Agentes de Citas',
+        loadComponent: () => import('./pages/agentes-citas-page/agentes-citas-page.component').then(m => m.AgentesCitasPageComponent)
+      },
+      {
+        path: 'external-ips',
+        title: 'Bases de Datos Externas',
+        loadComponent: () => import('./pages/external-ips-page/external-ips-page.component').then(m => m.ExternalIpsPageComponent)
+      },
+      {
+        path: 'healthcare-providers',
+        title: 'Healthcare Providers',
+        loadComponent: () => import('./pages/healthcare-providers-page/healthcare-providers-page.component').then(m => m.HealthcareProvidersPageComponent)
+      },
+      {
         path: '**',
         loadComponent: () => import('./pages/not-found-page/not-found-page.component').then(m => m.NotFoundPageComponent)
       }

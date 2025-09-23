@@ -10,7 +10,11 @@ export const routes: Routes = [
     ],
   },
   {
-    path: '',
+    path: 'dashboard',
     loadChildren: () => import('./dashboard/dashboard.routes').then(m => m.dashboardRoutes),
+  },
+  {
+    path: '',
+    loadComponent: () => import('./pages/landing/landing-page.component').then(m => m.LandingPageComponent),
   }
 ];
