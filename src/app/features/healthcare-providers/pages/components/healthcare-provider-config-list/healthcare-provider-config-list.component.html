@@ -1,0 +1,42 @@
+<div class="space-y-6">
+  <!-- Header con selector de proveedor -->
+  <div class="flex justify-between items-center">
+    <div>
+      <h2 class="text-xl font-semibold text-gray-900">Bases de Datos Externas</h2>
+      <p class="text-sm text-gray-500 mt-1">Gestiona las configuraciones de bases de datos externas para cada proveedor</p>
+    </div>
+  </div>
+
+  <!-- Selector de proveedor con autocompletado -->
+  <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+    <label for="provider-select" class="block text-sm font-medium text-gray-700 mb-2">
+      Seleccionar Proveedor
+    </label>
+    <app-provider-autocomplete
+      [providers]="providers()"
+      [selectedProviderId]="selectedProviderId()"
+      [placeholder]="''"
+      [disabled]="loading()"
+      (providerSelected)="onProviderChange($event)"
+      (providerChange)="onProviderChange($event)">
+    </app-provider-autocomplete>
+  </div>
+
+  <!-- Datos de External IPs cuando se selecciona un proveedor -->
+  @if (selectedProviderId()) {
+    <app-external-ips-data
+      [providerId]="selectedProviderId()"
+      [providerName]="getProviderName(selectedProviderId())"
+      (dataLoaded)="onExternalIpsDataLoaded($event)">
+    </app-external-ips-data>
+  } @else {
+    <div class="text-center py-12 bg-gray-50 rounded-lg">
+      <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+      </svg>
+      <h3 class="mt-2 text-sm font-medium text-gray-900">Seleccione un proveedor</h3>
+      <p class="mt-1 text-sm text-gray-500">Elija un proveedor para ver sus configuraciones de bases de datos externas.</p>
+    </div>
+  }
+
+</div>

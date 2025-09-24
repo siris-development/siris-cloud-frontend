@@ -1,10 +1,11 @@
 import { HttpRequest, HttpHandlerFn, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { inject } from '@angular/core';
-import { AuthService } from '../../auth/auth.service';
+import { AuthService } from '@/features';
+
 
 /**
- * Interceptor específico para peticiones de Healthcare Providers
+ * Interceptor específico para peticiones de Proveedores de Servicios de Salud
  * Agrega automáticamente el token de autorización a las peticiones
  */
 export function healthcareProviderAuthInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {

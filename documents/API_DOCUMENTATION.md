@@ -6,7 +6,7 @@
 2. [Autenticación](#autenticación)
 3. [Endpoints de Autenticación](#endpoints-de-autenticación)
 4. [Endpoints de Tenants](#endpoints-de-tenants)
-5. [Endpoints de Healthcare Providers (Proveedores de Servicios de Salud)](#endpoints-de-healthcare-providers-proveedores-de-servicios-de-salud)
+5. [Endpoints de Proveedores de Servicios de Salud (Proveedores de Servicios de Salud)](#endpoints-de-healthcare-providers-proveedores-de-servicios-de-salud)
 6. [Endpoints de External IPs Configs](#endpoints-de-external-ips-configs)
 7. [Endpoints de Dokploy API](#endpoints-de-dokploy-api)
 8. [Información del Tenant Principal](#información-del-tenant-principal)
@@ -577,13 +577,13 @@ X-Tenant-ID: <tenant-id>
 }
 ```
 
-## Endpoints de Healthcare Providers (Proveedores de Servicios de Salud)
+## Endpoints de Proveedores de Servicios de Salud (Proveedores de Servicios de Salud)
 
-Los endpoints de Healthcare Providers permiten gestionar proveedores de servicios de salud y sus configuraciones de microservicios asociados. Cada Healthcare Provider pertenece a un tenant específico y puede tener múltiples configuraciones de microservicios (HealthcareProviderConfig).
+Los endpoints de Proveedores de Servicios de Salud permiten gestionar proveedores de servicios de salud y sus configuraciones de microservicios asociados. Cada Healthcare Provider pertenece a un tenant específico y puede tener múltiples configuraciones de microservicios (HealthcareProviderConfig).
 
 ### Autenticación y Autorización
 
-Todos los endpoints de Healthcare Providers requieren:
+Todos los endpoints de Proveedores de Servicios de Salud requieren:
 - **Autenticación**: Token válido en el header `Authorization: Bearer <token>`
 - **Autorización**: Rol de `admin` en el tenant
 - **Validación de Tenant**: El Healthcare Provider debe pertenecer al tenant del usuario autenticado
@@ -645,7 +645,7 @@ Content-Type: application/json
 }
 ```
 
-### 2. Obtener Mis Healthcare Providers
+### 2. Obtener Mis Proveedores de Servicios de Salud
 
 **Endpoint**: `GET /healthcare-providers/my-healthcare-providers`
 
@@ -661,7 +661,7 @@ Authorization: Bearer <customToken>
 - ✅ Usa automáticamente el `tenantId` del token
 - ✅ Más simple para el frontend
 
-### 3. Obtener Healthcare Providers por Tenant
+### 3. Obtener Proveedores de Servicios de Salud por Tenant
 
 **Endpoint**: `GET /healthcare-providers/tenant/:tenantId`
 
@@ -1031,21 +1031,21 @@ const createHealthcareProvider = await fetch('/api/healthcare-providers', {
 const healthcareProvider = await createHealthcareProvider.json();
 console.log('Healthcare Provider creado:', healthcareProvider);
 
-// 3. Obtener mis Healthcare Providers (más simple)
+// 3. Obtener mis Proveedores de Servicios de Salud (más simple)
 const getMyProviders = await fetch('/api/healthcare-providers/my-healthcare-providers', {
   headers: { 'Authorization': `Bearer ${customToken}` }
 });
 
 const providers = await getMyProviders.json();
-console.log('Mis Healthcare Providers:', providers);
+console.log('Mis Proveedores de Servicios de Salud:', providers);
 
-// 4. Obtener Healthcare Providers por tenant (con validación)
+// 4. Obtener Proveedores de Servicios de Salud por tenant (con validación)
 const getProvidersByTenant = await fetch(`/api/healthcare-providers/tenant/${authData.primaryTenant.id}`, {
   headers: { 'Authorization': `Bearer ${customToken}` }
 });
 
 const tenantProviders = await getProvidersByTenant.json();
-console.log('Healthcare Providers del tenant:', tenantProviders);
+console.log('Proveedores de Servicios de Salud del tenant:', tenantProviders);
 ```
 
 ### Clase Helper para Frontend

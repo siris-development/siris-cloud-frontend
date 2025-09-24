@@ -1,6 +1,7 @@
 import { Component, inject, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../../auth/auth.service';
+import { AuthService } from '@/features';
+
 
 @Component({
   selector: 'app-tenant-info',

@@ -89,7 +89,7 @@ El `customToken` contiene:
 
 ## Endpoints Disponibles
 
-### 1. Obtener Healthcare Providers del Tenant del Usuario
+### 1. Obtener Proveedores de Servicios de Salud del Tenant del Usuario
 ```
 GET /api/healthcare-providers/my-healthcare-providers
 Authorization: Bearer <customToken>
@@ -97,7 +97,7 @@ Authorization: Bearer <customToken>
 - No requiere `tenantId` en la URL
 - Usa automáticamente el `tenantId` del token
 
-### 2. Obtener Healthcare Providers de un Tenant Específico
+### 2. Obtener Proveedores de Servicios de Salud de un Tenant Específico
 ```
 GET /api/healthcare-providers/tenant/:tenantId
 Authorization: Bearer <customToken>
