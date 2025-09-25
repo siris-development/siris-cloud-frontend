@@ -1,27 +1,94 @@
-<div id="menu" class="bg-gray-900 min-h-screen z-10 text-slate-300 w-64 left-0 h-screen overflow-y-scroll">
-  <div id="logo" class="my-4 px-6">
-    <h1 class="text-lg md:text-2xl font-bold text-white">SIRIS <span class="text-blue-500">CLOUD</span>.</h1>
-    <p class="text-slate-500 text-sm">Manage your actions and activities</p>
+<div class="bg-gradient-to-b from-slate-900 to-slate-800 min-h-screen w-72 shadow-2xl border-r border-slate-700">
+  <!-- Header Section -->
+  <div class="p-6 border-b border-slate-700">
+    <button (click)="goToLanding()" class="flex items-center space-x-3 w-full hover:bg-slate-700 rounded-lg p-2 -m-2 transition-colors duration-200 group cursor-pointer">
+      <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
+        <img src="/favicon/favicon.svg" alt="SirisCloud Logo" class="w-6 h-6" />
+      </div>
+      <div class="text-left">
+        <h1 class="text-xl font-bold text-white group-hover:text-blue-300 transition-colors duration-200">SIRIS <span class="text-blue-400">CLOUD</span></h1>
+        <p class="text-slate-400 text-xs group-hover:text-slate-300 transition-colors duration-200">Plataforma de gestión</p>
+      </div>
+    </button>
   </div>
-  <div id="profile" class="px-6">
-    <p class="text-slate-500">Bienvenido</p>
-    <a class="inline-flex space-x-2 items-center">
-      <span class="text-sm md:text-base font-bold">
-       {{authService.user()?.email}}
-      </span>
-    </a>
+
+  <!-- User Profile Section -->
+  <div class="p-6 border-b border-slate-700">
+    <div class="flex items-center space-x-3">
+      <div class="w-10 h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center">
+        <span class="text-white font-semibold text-sm">
+          {{getUserInitials()}}
+        </span>
+      </div>
+      <div class="flex-1 min-w-0">
+        <p class="text-sm font-medium text-white truncate">
+          {{authService.primaryTenant()?.name || authService.currentTenant()?.name || 'Sin tenant'}}
+        </p>
+        <p class="text-xs text-slate-400 truncate">
+          {{authService.user()?.email}}
+        </p>
+        @if (authService.primaryTenant()?.role || authService.currentTenant()?.role) {
+          <p class="text-xs text-blue-400 truncate">
+            {{(authService.primaryTenant()?.role || authService.currentTenant()?.role) === 'admin' ? 'Administrador' : 'Usuario'}}
+          </p>
+        }
+      </div>
+    </div>
   </div>
-  <div id="nav" class="w-full px-6">
+
+  <!-- Navigation Menu -->
+  <nav class="flex-1 p-4 space-y-2">
     @for (item of menuItems; track $index) {
       <a [routerLink]="item.path"
-      routerLinkActive="bg-blue-800"
-      class="w-full px-2 inline-flex space-x-2 items-center border-b border-slate-700 py-3 hover:bg-white/5 transition ease-linear duration-150">
-      <div class="flex flex-col">
-        <span class="text-lg font-bold leading-5 text-white">{{item.title}}</span>
-        <span class="text-sm text-white/50 hidden md:block">Data Overview</span>
-      </div>
-    </a>
-  }
+         routerLinkActive="bg-blue-600 text-white shadow-lg"
+         [routerLinkActiveOptions]="{exact: false}"
+         class="group flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200 hover:bg-slate-700 hover:text-white text-slate-300 cursor-pointer">
+        
+        <!-- Icon -->
+        <div class="flex-shrink-0 w-5 h-5 mr-3">
+          @switch (item.title) {
+            @case ('Bienvenido') {
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2-2z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5a2 2 0 012-2h4a2 2 0 012 2v2H8V5z"></path>
+              </svg>
+            }
+            @case ('Pagos') {
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
+              </svg>
+            }
 
+            @case ('Proveedores de Servicios de Salud') {
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+              </svg>
+            }
+            @default {
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+              </svg>
+            }
+          }
+        </div>
+        
+        <!-- Text -->
+        <span class="truncate">{{item.title}}</span>
+        
+        <!-- Active indicator -->
+        <div class="ml-auto w-2 h-2 bg-blue-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
+      </a>
+    }
+  </nav>
+
+  <!-- Footer Section with Logout -->
+  <div class="p-4 border-t border-slate-700">
+    <button (click)="logout()"
+            class="w-full flex items-center px-4 py-3 text-sm font-medium text-slate-300 rounded-lg transition-all duration-200 hover:bg-red-600 hover:text-white group cursor-pointer">
+      <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+      </svg>
+      <span>Cerrar Sesión</span>
+    </button>
   </div>
 </div>

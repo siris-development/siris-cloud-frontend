@@ -1,0 +1,28 @@
+<div class="flex h-screen bg-gray-50 overflow-hidden">
+  <!-- Sidebar -->
+  <app-sidebar />
+  
+  <!-- Main Content Area -->
+  <div class="flex-1 flex flex-col overflow-hidden">
+    <!-- Top Bar -->
+    <header class="bg-white shadow-sm border-b border-gray-200 px-6 py-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-xl font-semibold text-gray-900">
+            {{getCurrentPageTitle()}}
+          </h2>
+          <p class="text-sm text-gray-500 mt-1">
+            {{getCurrentPageDescription()}}
+          </p>
+        </div>
+      </div>
+    </header>
+    
+    <!-- Page Content -->
+    <main class="flex-1 overflow-y-auto bg-gray-50">
+      <div class="p-6">
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+  </div>
+</div>

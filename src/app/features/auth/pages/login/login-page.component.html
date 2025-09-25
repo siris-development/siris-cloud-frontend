@@ -1,0 +1,85 @@
+<div class="rounded-xl shadow-lg p-12 w-full relative backdrop-blur-md">
+  <div class="text-center mb-10">
+    <h1 class="text-3xl font-bold mb-2 bg-clip-text text-black">
+      Iniciar sesión</h1>
+    <p class="text-gray-400 text-base font-normal">Únete a nuestra comunidad</p>
+  </div>
+
+  <form [formGroup]="loginForm" (ngSubmit)="login()" class="flex flex-col gap-6" id="registerForm">
+    <div class="relative">
+      <label class="block mb-2 text-gray-400 text-sm font-medium" for="registerEmail">Correo electrónico</label>
+      <input id="registerEmail" name="email" formControlName="email"
+        class="w-full px-4 py-3 border rounded-lg text-gray-500 text-base transition-all outline-none placeholder:text-gray-500"
+        type="email" placeholder="Escribe tu correo electrónico" required />
+      <div class="text-red-400 text-xs mt-2 hidden" id="registerEmailError"></div>
+
+      @if (email?.invalid && (email?.dirty || email?.touched)) {
+      <div class="text-red-400 text-xs mt-2">
+        @if (email?.hasError('required')) {
+        <div>El correo es obligatorio.</div>
+        }
+        @if (email?.hasError('email')) {
+        <div>El correo no es válido.</div>
+        }
+      </div>
+      }
+    </div>
+
+    <div class="relative">
+      <label class="block mb-2 text-gray-400 text-sm font-medium" for="registerPassword">Contraseña</label>
+      <input id="registerPassword" name="password" formControlName="password"
+        class="w-full px-4 py-3 border rounded-lg  text-gray-500 text-base transition-all outline-none placeholder:text-gray-500"
+        type="password" placeholder="Escribe tu contraseña" required />
+      <div class="text-red-400 text-xs mt-2 hidden" id="registerPasswordError"></div>
+
+      @if(password?.invalid && password?.touched) {
+      <div class="text-red-400 text-xs mt-2">
+        @if(password?.hasError('required')) {
+        <div>La contraseña es obligatoria.</div>
+        }
+        @if(password?.hasError('minlength')) {
+        <div>Debe tener al menos 6 caracteres.</div>
+        }
+      </div>
+      }
+    </div>
+
+    <button type="submit"
+      class="flex items-center justify-center px-6 py-3 rounded-lg font-semibold bg-black text-white shadow-md transition disabled:opacity-60 disabled:cursor-not-allowed hover:bg-gray-800 cursor-pointer"
+      id="registerBtn" [disabled]="loading()">
+      {{ loading() ? 'Cargando' : 'Iniciar sesión' }}
+    </button>
+  </form>
+
+  <!-- Enlaces de ayuda -->
+  <div class="text-center mt-4 space-y-2">
+    <div>
+      <button 
+        type="button" 
+        class="text-blue-600 hover:text-blue-800 text-sm font-medium hover:underline cursor-pointer"
+        [routerLink]="['/auth/forgot-password']"
+      >
+        ¿Olvidaste tu contraseña?
+      </button>
+    </div>
+    @if (showResendConfirmation()) {
+      <div>
+        <button 
+          type="button" 
+          class="text-blue-600 hover:text-blue-800 text-sm font-medium hover:underline cursor-pointer"
+          [routerLink]="['/auth/resend-confirmation']"
+        >
+          ¿No recibiste el código de confirmación?
+        </button>
+      </div>
+    }
+  </div>
+
+  <div class="flex items-center justify-center mt-8 gap-2">
+    <span class="text-gray-400 text-sm">¿No tienes una cuenta?</span>
+    <button type="button" class="text-black hover:underline text-sm font-semibold cursor-pointer" [routerLink]="['/auth/register']">
+      Crear cuenta
+    </button>
+  </div>
+</div>
+

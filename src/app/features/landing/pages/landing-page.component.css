@@ -1,0 +1,105 @@
+/* Corporate gradients */
+.gradient-bg {
+  background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 50%, #2563eb 100%);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Corporate colors */
+.corporate-blue {
+  background-color: #1e3a8a;
+}
+
+.corporate-gray {
+  background-color: #f8fafc;
+}
+
+/* Hover effects */
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Hero background */
+.hero-bg {
+  background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 30%, #2563eb 70%, #3b82f6 100%);
+  position: relative;
+}
+
+.hero-bg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+  opacity: 0.3;
+}
+
+/* Logo styles */
+.logo-hero {
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
+  transition: all 0.3s ease;
+}
+
+.logo-hero:hover {
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.4)) blur(0.5px);
+  transform: scale(1.05);
+}
+
+.logo-nav {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+  transition: all 0.3s ease;
+}
+
+.logo-nav:hover {
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+  transform: scale(1.02);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .logo-hero {
+    height: 5rem !important;
+  }
+  
+  .logo-nav {
+    height: 2.5rem !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .logo-hero {
+    height: 4rem !important;
+  }
+  
+  .logo-nav {
+    height: 2rem !important;
+  }
+}

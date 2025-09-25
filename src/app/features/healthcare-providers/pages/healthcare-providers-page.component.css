@@ -1,0 +1,236 @@
+/* Estilos específicos para el componente Proveedores de Servicios de Salud */
+
+/* Animaciones generales */
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Estilos para las tarjetas de proveedores */
+.provider-card {
+  transition: all 0.2s ease-in-out;
+}
+
+.provider-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Estilos para los botones de módulos */
+.module-button {
+  transition: all 0.2s ease-in-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.module-button:hover {
+  transform: translateY(-1px);
+}
+
+.module-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.module-button:hover::before {
+  left: 100%;
+}
+
+/* Estilos para las tarjetas de estadísticas */
+.stats-card {
+  transition: all 0.2s ease-in-out;
+}
+
+.stats-card:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para el header */
+.header-gradient {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+}
+
+/* Estilos para los iconos de módulos */
+.module-icon {
+  transition: transform 0.2s ease-in-out;
+}
+
+.module-button:hover .module-icon {
+  transform: scale(1.1);
+}
+
+/* Estilos para el estado de carga */
+.loading-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Estilos para el estado vacío */
+.empty-state {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  .provider-card {
+    margin-bottom: 1rem;
+  }
+  
+  .module-button {
+    padding: 0.75rem;
+  }
+  
+  .module-button span {
+    font-size: 0.75rem;
+  }
+}
+
+/* Estilos para el grid de módulos */
+.modules-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+@media (max-width: 640px) {
+  .modules-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Estilos para los botones de acción */
+.action-button {
+  transition: all 0.2s ease-in-out;
+}
+
+.action-button:hover {
+  transform: scale(1.05);
+}
+
+/* Estilos para el footer de información del proveedor */
+.provider-footer {
+  border-top: 1px solid #e5e7eb;
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+
+/* Estilos para el botón de crear nuevo proveedor */
+.create-button {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  transition: all 0.2s ease-in-out;
+}
+
+.create-button:hover {
+  background: linear-gradient(135deg, #047857 0%, #065f46 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px -2px rgba(5, 150, 105, 0.4);
+}
+
+/* Estilos para la barra de búsqueda */
+.search-container {
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  border: 1px solid #e5e7eb;
+  padding: 1rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.search-container:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.search-input {
+  transition: all 0.2s ease-in-out;
+}
+
+.search-input:focus {
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+  border-color: #059669;
+}
+
+.search-select {
+  transition: all 0.2s ease-in-out;
+}
+
+.search-select:focus {
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+  border-color: #059669;
+}
+
+.clear-button {
+  transition: all 0.2s ease-in-out;
+}
+
+.clear-button:hover {
+  background-color: #f3f4f6;
+  transform: scale(1.05);
+}
+
+.search-results {
+  animation: fadeInUp 0.3s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Estilos responsivos para la búsqueda */
+@media (max-width: 640px) {
+  .search-container {
+    padding: 0.75rem;
+  }
+  
+  .search-input,
+  .search-select {
+    font-size: 0.875rem;
+  }
+  
+  .clear-button {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+  }
+}
