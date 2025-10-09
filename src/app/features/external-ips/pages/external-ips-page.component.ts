@@ -83,6 +83,7 @@ export class ExternalIpsPageComponent implements OnInit {
     try {
       const configs = await firstValueFrom(this.externalIpService.getConfigs());
       this.configs.set(configs || []);
+      console.log('Configs:', configs);
     } catch (err) {
       this.error.set('Error al cargar las configuraciones');
       console.error('Error loading configs:', err);
@@ -95,6 +96,7 @@ export class ExternalIpsPageComponent implements OnInit {
     try {
       const config = await firstValueFrom(this.externalIpService.getCronHisCitasConfig());
       this.cronHisConfig.set(config || null);
+      console.log('CronHis config:', config);
     } catch (err) {
       console.error('Error loading CronHis config:', err);
     }
@@ -104,6 +106,7 @@ export class ExternalIpsPageComponent implements OnInit {
     try {
       const stats = await firstValueFrom(this.externalIpService.getCronHisCitasStats());
       this.cronHisStats.set(stats || null);
+      console.log('CronHis stats:', stats);
     } catch (err) {
       console.error('Error loading CronHis stats:', err);
     }

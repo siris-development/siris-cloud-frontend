@@ -16,7 +16,7 @@ export * from './interfaces/user.interface';
 // Components
 export * from './layouts/auth-layout/auth-layout.component';
 export * from './pages/login/login-page.component';
-export * from './pages/register/register-page.component';
+export * from './pages/two-factor-registration/two-factor-registration-page.component';
 export * from './pages/forgot-password/forgot-password-page.component';
-export * from './pages/confirm-email/confirm-email-page.component';
+export * from './pages/two-factor-confirmation/two-factor-confirmation-page.component';
 export * from './pages/resend-confirmation/resend-confirmation-page.component';

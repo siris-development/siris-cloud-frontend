@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmar tu Email - Siris Cloud</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #f8fafc;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 30px;
+            text-align: center;
+        }
+        .logo {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+        .header h1 {
+            color: white;
+            margin: 0;
+            font-size: 28px;
+            font-weight: 700;
+        }
+        .header p {
+            color: rgba(255, 255, 255, 0.9);
+            margin: 10px 0 0;
+            font-size: 16px;
+        }
+        .content {
+            padding: 40px 30px;
+        }
+        .greeting {
+            font-size: 18px;
+            color: #1f2937;
+            margin-bottom: 20px;
+        }
+        .message {
+            font-size: 16px;
+            color: #4b5563;
+            margin-bottom: 30px;
+            line-height: 1.7;
+        }
+        .cta-container {
+            text-align: center;
+            margin: 40px 0;
+        }
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            padding: 16px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 4px 14px 0 rgba(102, 126, 234, 0.4);
+        }
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px 0 rgba(102, 126, 234, 0.6);
+        }
+        .alternative {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f9fafb;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        .alternative h3 {
+            color: #374151;
+            margin: 0 0 10px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .code {
+            font-family: 'Courier New', monospace;
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+            letter-spacing: 2px;
+            background-color: #ffffff;
+            padding: 12px 20px;
+            border-radius: 6px;
+            border: 2px solid #e5e7eb;
+            display: inline-block;
+            margin: 10px 0;
+        }
+        .security-note {
+            background-color: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 30px 0;
+        }
+        .security-note h4 {
+            color: #92400e;
+            margin: 0 0 8px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .security-note p {
+            color: #92400e;
+            margin: 0;
+            font-size: 14px;
+        }
+        .footer {
+            background-color: #f9fafb;
+            padding: 30px;
+            text-align: center;
+            border-top: 1px solid #e5e7eb;
+        }
+        .footer p {
+            color: #6b7280;
+            font-size: 14px;
+            margin: 0 0 10px;
+        }
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        .social-links {
+            margin-top: 20px;
+        }
+        .social-links a {
+            display: inline-block;
+            margin: 0 10px;
+            color: #6b7280;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        @media (max-width: 600px) {
+            .container {
+                margin: 0;
+                border-radius: 0;
+            }
+            .header, .content, .footer {
+                padding: 30px 20px;
+            }
+            .header h1 {
+                font-size: 24px;
+            }
+            .cta-button {
+                padding: 14px 28px;
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">SC</div>
+            <h1>¡Bienvenido a Siris Cloud!</h1>
+            <p>Confirma tu dirección de correo electrónico</p>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <div class="greeting">
+                Hola {{userName}},
+            </div>
+
+            <div class="message">
+                Gracias por registrarte en Siris Cloud. Para completar tu registro y acceder a todas las funcionalidades de nuestra plataforma, necesitamos verificar tu dirección de correo electrónico.
+            </div>
+
+            <div class="cta-container">
+                <a href="{{confirmationLink}}" class="cta-button">
+                    Confirmar mi Email
+                </a>
+            </div>
+
+            <div class="alternative">
+                <h3>¿No puedes hacer clic en el botón?</h3>
+                <p>Copia y pega este enlace en tu navegador:</p>
+                <p style="word-break: break-all; color: #667eea; font-size: 14px;">{{confirmationLink}}</p>
+                
+                <h3>O usa este código de verificación:</h3>
+                <div class="code">{{verificationCode}}</div>
+                <p style="font-size: 14px; color: #6b7280; margin-top: 10px;">
+                    Ingresa este código en la página de confirmación para verificar tu email.
+                </p>
+            </div>
+
+            <div class="security-note">
+                <h4>🔒 Información de Seguridad</h4>
+                <p>Este enlace es válido por 24 horas. Si no confirmas tu email en este tiempo, deberás solicitar un nuevo enlace de confirmación.</p>
+            </div>
+
+            <div class="message">
+                <strong>¿Qué sigue después?</strong><br>
+                Una vez confirmado tu email, podrás:
+                <ul style="color: #4b5563; margin: 10px 0;">
+                    <li>Completar la configuración de tu empresa</li>
+                    <li>Acceder al dashboard principal</li>
+                    <li>Configurar tus integraciones</li>
+                    <li>Invitar a tu equipo</li>
+                </ul>
+            </div>
+
+            <div class="message">
+                Si tienes alguna pregunta o necesitas ayuda, no dudes en contactar a nuestro equipo de soporte.
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p><strong>Siris Cloud</strong> - Plataforma de Gestión Empresarial</p>
+            <p>Este email fue enviado a {{userEmail}} el {{currentDate}}</p>
+            
+            <div class="social-links">
+                <a href="{{websiteUrl}}">Sitio Web</a>
+                <a href="{{supportUrl}}">Soporte</a>
+                <a href="{{privacyUrl}}">Privacidad</a>
+                <a href="{{termsUrl}}">Términos</a>
+            </div>
+
+            <p style="margin-top: 20px; font-size: 12px; color: #9ca3af;">
+                Si no creaste una cuenta en Siris Cloud, puedes ignorar este email de forma segura.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
+

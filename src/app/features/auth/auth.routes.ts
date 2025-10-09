@@ -11,19 +11,19 @@ export const authRoutes: Routes = [
         loadComponent: () => import('./pages/login/login-page.component').then(m => m.LoginPageComponent)
       },
       {
-        path: 'register',
-        title: 'Registrarse',
-        loadComponent: () => import('./pages/register/register-page.component').then(m => m.RegisterPageComponent)
+        path: 'two-factor-registration',
+        title: 'Registro de Dos Factores',
+        loadComponent: () => import('./pages/two-factor-registration/two-factor-registration-page.component').then(m => m.TwoFactorRegistrationPageComponent)
+      },
+      {
+        path: 'two-factor-confirmation',
+        title: 'Confirmación de Dos Factores',
+        loadComponent: () => import('./pages/two-factor-confirmation/two-factor-confirmation-page.component').then(m => m.TwoFactorConfirmationPageComponent)
       },
       {
         path: 'forgot-password',
         title: 'Recuperar Contraseña',
         loadComponent: () => import('./pages/forgot-password/forgot-password-page.component').then(m => m.ForgotPasswordPageComponent)
-      },
-      {
-        path: 'confirm-email',
-        title: 'Confirmar Email',
-        loadComponent: () => import('./pages/confirm-email/confirm-email-page.component').then(m => m.ConfirmEmailPageComponent)
       },
       {
         path: 'resend-confirmation',

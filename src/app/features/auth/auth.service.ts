@@ -69,19 +69,28 @@ export class AuthService {
   }
 
   // 1. Registro de Usuario
-  register(email: string, password: string, tenantName: string, tenantIdentifier: string) {
-    return this.http.post<RegisterResponse>(`${environment.baseUrl}/auth/register`, {
+  twoFactorRegistration(email: string, password: string) {
+    return this.http.post<RegisterResponse>(`${environment.baseUrl}/auth/two-factor-registration`, {
       email,
-      password,
-      tenantName,
-      tenantIdentifier
+      password
     }).pipe(
-      map(resp => this.handleRegisterSuccess(resp)),
+      map(resp => this.handleTwoFactorRegistrationSuccess(resp)),
       catchError((error: any) => this.handleAuthError(error))
     );
   }
 
-  // 2. Inicio de Sesión
+  //2. Verify Two Factor Registration
+  verifyTwoFactorRegistration(email: string, tenantName: string) {
+    return this.http.post<RegisterResponse>(`${environment.baseUrl}/auth/verify-two-factor-registration`, {
+      tenantName,
+      email,
+    }).pipe(
+      map(resp => console.log(resp)),
+      catchError((error: any) => this.handleAuthError(error))
+    );
+  }
+
+  // 3. Inicio de Sesión
   login(email: string, password: string) {
     return this.http.post<LoginResponse>(`${environment.baseUrl}/auth/login`, { email, password })
     .pipe(
@@ -90,7 +99,7 @@ export class AuthService {
     );
   }
 
-  // 3. Obtener Perfil de Usuario
+  // 4. Obtener Perfil de Usuario
   getProfile(): Observable<UserProfileResponse> {
     return this.http.get<UserProfileResponse>(`${environment.baseUrl}/auth/me`, {
       headers: this.getHeaders()
@@ -103,7 +112,7 @@ export class AuthService {
     );
   }
 
-  // 4. Restablecer Contraseña
+  // 5. Restablecer Contraseña
   resetPassword(email: string): Observable<MessageResponse> {
     return this.http.post<MessageResponse>(`${environment.baseUrl}/auth/reset-password`, { email })
     .pipe(
@@ -114,7 +123,7 @@ export class AuthService {
     );
   }
 
-  // 5. Reenviar Confirmación
+  // 6. Reenviar Confirmación
   resendConfirmation(email: string): Observable<MessageResponse> {
     return this.http.post<MessageResponse>(`${environment.baseUrl}/auth/resend-confirmation`, { email })
     .pipe(
@@ -125,7 +134,7 @@ export class AuthService {
     );
   }
 
-  // 6. Verificar Estado de Usuario
+  // 7. Verificar Estado de Usuario
   checkUserStatus(email: string, tenantIdentifier: string): Observable<CheckUserStatusResponse> {
     return this.http.post<CheckUserStatusResponse>(`${environment.baseUrl}/auth/check-user-status`, {
       email,
@@ -138,7 +147,7 @@ export class AuthService {
     );
   }
 
-  // 7. Unirse a Tenant
+  // 8. Unirse a Tenant
   joinTenant(email: string, tenantIdentifier: string, role: 'admin' | 'user' = 'user'): Observable<JoinTenantResponse> {
     return this.http.post<JoinTenantResponse>(`${environment.baseUrl}/auth/join-tenant`, {
       email,
@@ -152,7 +161,7 @@ export class AuthService {
     );
   }
 
-  // 8. Manejar Correos Perdidos
+  // 9. Manejar Correos Perdidos
   handleMissingEmail(email: string, action: 'resend_confirmation' | 'resend_password_reset' | 'check_status'): Observable<MessageResponse> {
     return this.http.post<MessageResponse>(`${environment.baseUrl}/auth/handle-missing-email`, {
       email,
@@ -165,7 +174,7 @@ export class AuthService {
     );
   }
 
-  // 9. Recuperación Inteligente de Cuenta
+  // 10. Recuperación Inteligente de Cuenta
   recoverAccount(email: string): Observable<MessageResponse> {
     return this.http.post<MessageResponse>(`${environment.baseUrl}/auth/recover-account`, { email })
     .pipe(
@@ -176,7 +185,7 @@ export class AuthService {
     );
   }
 
-  // 10. Verificar Estado de Autenticación
+  // 11. Verificar Estado de Autenticación
   checkStatus(): Observable<boolean> {
     const token = localStorage.getItem(LOCAL_STORAGE_KEYS.AUTH_TOKEN);
     if (!token) {
@@ -193,13 +202,13 @@ export class AuthService {
     );
   }
 
-  // 11. Seleccionar Tenant
+  // 12. Seleccionar Tenant
   selectTenant(tenant: Tenant) {
     this._currentTenant.set(tenant);
     localStorage.setItem(LOCAL_STORAGE_KEYS.CURRENT_TENANT, JSON.stringify(tenant));
   }
 
-  // 12. Cerrar Sesión
+  // 13. Cerrar Sesión
   logout() {
     this._user.set(null);
     this._token.set(null);
@@ -268,6 +277,23 @@ export class AuthService {
   }
 
   // Métodos privados para manejar respuestas
+  private handleTwoFactorRegistrationSuccess({ user, session }: RegisterResponse) {
+    // For two-factor registration, we don't authenticate immediately
+    // The user needs to verify their email first
+    console.log('Two-factor registration successful:', { user, session });
+    
+    // Store user data temporarily (without authentication)
+    if (user) {
+      localStorage.setItem(LOCAL_STORAGE_KEYS.USER_DATA, JSON.stringify(user));
+    }
+    
+    return { 
+      success: true, 
+      requiresEmailVerification: true,
+      user: user 
+    };
+  }
+
   private handleRegisterSuccess({ user, session, tenant, primaryTenant, }: RegisterResponse) {
 
     this._user.set(user);
@@ -291,7 +317,7 @@ export class AuthService {
     this._authStatus.set('authenticated');
 
     // Si hay tenants, seleccionar el primero por defecto
-    if (tenants.length > 0) {
+    if (tenants && tenants.length > 0) {
       this.selectTenant(tenants[0]);
     }
 

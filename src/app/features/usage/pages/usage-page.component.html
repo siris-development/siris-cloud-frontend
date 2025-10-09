@@ -1,0 +1,26 @@
+<div class="usage-page">
+  @if (loading()) {
+    <div class="loading-container">
+      <div class="loading-spinner"></div>
+      <span>Cargando datos del proveedor...</span>
+    </div>
+  } @else if (error()) {
+    <div class="error-container">
+      <svg class="error-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+      </svg>
+      <h3>Error al cargar datos del proveedor</h3>
+      <p>{{ error() }}</p>
+      <button (click)="loadHealthcareProvider()" class="retry-button">
+        Intentar de nuevo
+      </button>
+    </div>
+  } @else {
+
+    <!-- Usage Dashboard -->
+    <app-usage-data
+      [projectId]="selectedProjectId()"
+      [projectName]="selectedProjectName()">
+    </app-usage-data>
+  }
+</div>

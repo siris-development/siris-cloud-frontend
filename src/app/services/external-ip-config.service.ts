@@ -15,6 +15,7 @@ import {
   UpdateConnectionStatusRequest,
   ExternalIpConfigFilters,
   ExternalIpConfigPaginatedResponse,
+  HealthcareProvider,
 } from '@/features';
 import { ErrorHandlerService } from '@/shared/services/error-handler.service';
 
@@ -24,7 +25,7 @@ import { ErrorHandlerService } from '@/shared/services/error-handler.service';
 export class ExternalIpConfigService {
   private http = inject(HttpClient);
   private errorHandler = inject(ErrorHandlerService);
-  private baseUrl = `${environment.baseUrl}/external-ips-configs`;
+  private baseUrl = `${environment.baseUrl}/healthcare-providers`;
   private deployUrl = `${environment.baseUrl}/dokploy-api`;
 
   private getHeaders(): HttpHeaders {
@@ -34,12 +35,27 @@ export class ExternalIpConfigService {
     });
   }
 
+  private getSelectedHealthcareProviderId(): string {
+
+    try {
+      const selectedProviderData = localStorage.getItem('selectedHealthcareProvider');
+      if (selectedProviderData) {
+        const provider: HealthcareProvider = JSON.parse(selectedProviderData);
+        return provider.id;
+      }
+    } catch (error) {
+      console.warn('Error parsing selectedHealthcareProvider from localStorage:', error);
+    }
+    return '';
+  }
+
   /**
    * Obtener todas las configuraciones de IP externa del tenant
    */
   getConfigs(): Observable<ExternalIpConfig[]> {
+    const providerId = this.getSelectedHealthcareProviderId();
     return this.http
-      .get<ExternalIpConfig[]>(`${this.baseUrl}/cronhis-citas`, {
+      .get<ExternalIpConfig[]>(`${this.baseUrl}/${providerId}/configs`, {
         headers: this.getHeaders(),
       })
       .pipe(

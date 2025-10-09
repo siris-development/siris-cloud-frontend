@@ -6,3 +6,4 @@ export * from './payment';
 export * from './whatsapp';
 export * from './dashboard';
 export * from './landing';
+export * from './tiers';

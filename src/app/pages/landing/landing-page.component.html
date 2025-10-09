@@ -38,7 +38,7 @@
         } @else {
           <!-- Usuario no autenticado: mostrar login y registro -->
           <a routerLink="/auth/login" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer">Iniciar Sesión</a>
-          <a routerLink="/auth/register" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer">Registrarse</a>
+          <a routerLink="/auth/two-factor-registration" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer">Registrarse</a>
         }
       </div>
     </div>
@@ -71,7 +71,7 @@
           </a>
         } @else {
           <!-- Usuario no autenticado: mostrar registro -->
-          <a routerLink="/auth/register" class="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 rounded-lg text-lg font-semibold transition-all hover-lift cursor-pointer">
+          <a routerLink="/auth/two-factor-registration" class="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 rounded-lg text-lg font-semibold transition-all hover-lift cursor-pointer">
             Comenzar Ahora
           </a>
           <a (click)="scrollToSection('features')" class="border-2 border-white text-white hover:bg-white hover:text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold transition-all cursor-pointer">
@@ -211,7 +211,7 @@
             Soporte por email
           </li>
         </ul>
-        <a routerLink="/auth/register" class="w-full bg-gray-200 text-gray-800 hover:bg-gray-300 py-3 px-6 rounded-lg font-semibold transition-colors text-center block cursor-pointer">
+        <a routerLink="/auth/two-factor-registration" class="w-full bg-gray-200 text-gray-800 hover:bg-gray-300 py-3 px-6 rounded-lg font-semibold transition-colors text-center block cursor-pointer">
           Comenzar
         </a>
       </div>
@@ -248,7 +248,7 @@
             Integraciones avanzadas
           </li>
         </ul>
-        <a routerLink="/auth/register" class="w-full bg-white text-blue-600 hover:bg-gray-100 py-3 px-6 rounded-lg font-semibold transition-colors text-center block cursor-pointer">
+        <a routerLink="/auth/two-factor-registration" class="w-full bg-white text-blue-600 hover:bg-gray-100 py-3 px-6 rounded-lg font-semibold transition-colors text-center block cursor-pointer">
           Comenzar
         </a>
       </div>
@@ -282,7 +282,7 @@
             SLA garantizado
           </li>
         </ul>
-        <a routerLink="/auth/register" class="w-full bg-gray-200 text-gray-800 hover:bg-gray-300 py-3 px-6 rounded-lg font-semibold transition-colors text-center block cursor-pointer">
+        <a routerLink="/auth/two-factor-registration" class="w-full bg-gray-200 text-gray-800 hover:bg-gray-300 py-3 px-6 rounded-lg font-semibold transition-colors text-center block cursor-pointer">
           Comenzar
         </a>
       </div>
@@ -310,7 +310,7 @@
         </a>
       } @else {
         <!-- Usuario no autenticado: mostrar registro -->
-        <a routerLink="/auth/register" class="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 rounded-lg text-lg font-semibold transition-all hover-lift cursor-pointer">
+        <a routerLink="/auth/two-factor-registration" class="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 rounded-lg text-lg font-semibold transition-all hover-lift cursor-pointer">
           Solicitar Demo
         </a>
         <a (click)="scrollToSection('contact')" class="border-2 border-white text-white hover:bg-white hover:text-blue-600 px-8 py-4 rounded-lg text-lg font-semibold transition-all cursor-pointer">

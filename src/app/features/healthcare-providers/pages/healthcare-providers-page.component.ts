@@ -138,6 +138,9 @@ export class HealthcareProvidersPageComponent implements OnInit {
       case 'payment':
         this.router.navigate(['/payment']);
         break;
+      case 'bot-transactions':
+        this.router.navigate(['/usage']);
+        break;
       default:
         console.warn(`Módulo ${module} no reconocido`);
     }

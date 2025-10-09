@@ -44,6 +44,10 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./features/external-ips/external-ips.routes').then((m) => m.externalIpsRoutes),
   },
-
-  
+  {
+    path: 'usage',
+    canActivate: [AuthenticatedGuard],
+    loadChildren: () =>
+      import('./features/usage/usage.routes').then((m) => m.usageRoutes),
+  },
 ];

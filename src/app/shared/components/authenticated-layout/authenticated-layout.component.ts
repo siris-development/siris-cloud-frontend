@@ -38,7 +38,8 @@ export class AuthenticatedLayoutComponent {
       '/external-ips/stats': 'Estadísticas',
       '/healthcare-providers': 'Proveedores de Salud',
       '/payment': 'Pagos',
-      '/whatsapp': 'WhatsApp'
+      '/whatsapp': 'WhatsApp',
+      '/usage': 'Uso'
     };
     
     return routeMap[this.currentRoute] || 'Dashboard';
@@ -57,7 +58,8 @@ export class AuthenticatedLayoutComponent {
       '/external-ips/stats': 'Estadísticas de conexiones y rendimiento',
       '/healthcare-providers': 'Gestión de proveedores de salud',
       '/payment': 'Administración de pagos',
-      '/whatsapp': 'Integración con WhatsApp'
+      '/whatsapp': 'Integración con WhatsApp',
+      '/usage': 'Gestión de uso'
     };
     
     return descriptionMap[this.currentRoute] || 'Gestiona tus actividades';

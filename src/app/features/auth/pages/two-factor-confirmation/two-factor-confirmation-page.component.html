@@ -1,0 +1,67 @@
+<div class="flex flex-col gap-6 rounded-xl shadow-lg p-12 w-full relative backdrop-blur-md">
+  @if(error) {
+    <div class="text-red-600 bg-red-100 p-4 rounded">
+      <strong>{{ errorCode }}</strong>: {{ errorDescription }}
+    </div>
+  } @else {
+  <div class="text-center mb-10">
+    <h1 class="text-3xl font-bold mb-2 bg-clip-text text-black">
+      Confirmar contraseña</h1>
+    <p class="text-gray-400 text-base font-normal">La contraseña se ha verificado correctamente</p>
+  </div>
+
+  <!-- Información de la Empresa -->
+  <div class="border-t pt-6 mt-4">
+    <h3 class="text-lg font-semibold text-gray-700 mb-4">Información de la Empresa</h3>
+
+    <div class="relative">
+      <label class="block mb-2 text-gray-400 text-sm font-medium" for="registerEmail">Correo electrónico</label>
+      <input id="registerEmail" name="email" formControlName="email"
+        class="w-full px-4 py-3 border rounded-lg text-gray-500 text-base transition-all outline-none placeholder:text-gray-500"
+        type="email" readonly />
+    </div>
+
+    <div class="relative">
+        <label class="block mb-2 text-gray-400 text-sm font-medium" for="tenantName">Nombre de la Empresa</label>
+        <input id="tenantName" name="tenantName" formControlName="tenantName"
+          class="w-full px-4 py-3 border rounded-lg text-gray-500 text-base transition-all outline-none placeholder:text-gray-500"
+          type="text" placeholder="Mi Empresa S.A." required />
+        @if(tenantName?.invalid && tenantName?.touched) {
+        <div class="text-red-400 text-xs mt-2">
+          @if(tenantName?.hasError('required')) {
+          <div>El nombre de la empresa es obligatorio.</div>
+          }
+          @if(tenantName?.hasError('minlength')) {
+          <div>Debe tener al menos 3 caracteres.</div>
+          }
+      </div>
+      }
+    </div>
+    <div class="relative mt-4">
+      <label class="block mb-2 text-gray-400 text-sm font-medium" for="tenantIdentifier">Identificador de la Empresa</label>
+      <input id="tenantIdentifier" name="tenantIdentifier" formControlName="tenantIdentifier"
+        class="w-full px-4 py-3 border rounded-lg text-gray-500 text-base transition-all outline-none placeholder:text-gray-500"
+        type="text" placeholder="mi-empresa-123" required />
+      @if(tenantIdentifier?.invalid && tenantIdentifier?.touched) {
+      <div class="text-red-400 text-xs mt-2">
+        @if(tenantIdentifier?.hasError('required')) {
+        <div>El identificador es obligatorio.</div>
+        }
+        @if(tenantIdentifier?.hasError('minlength')) {
+        <div>Debe tener al menos 3 caracteres.</div>
+        }
+        @if(tenantIdentifier?.hasError('invalidIdentifier')) {
+        <div>Solo se permiten letras, números, guiones y guiones bajos.</div>
+        }
+      </div>
+      }
+      <p class="text-gray-400 text-xs mt-1">Este identificador será único para tu empresa (ej: mi-empresa-123)</p>
+    </div>
+  </div>
+
+  <button [routerLink]="'/auth/login'"
+    class="flex items-center justify-center px-6 py-3 rounded-lg font-semibold bg-black text-white shadow-md transition disabled:opacity-60 disabled:cursor-not-allowed hover:bg-gray-800 cursor-pointer">
+    Iniciar Sesión
+  </button>
+  }
+</div>

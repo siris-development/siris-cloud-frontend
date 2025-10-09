@@ -3,6 +3,8 @@ export * from './healthcare-providers.routes';
 
 // Models
 export * from './models/healthcare-provider.interface';
+export * from './models/bot-transaction.interface';
+export * from './models/bot-transaction-dto.interface';
 
 // Components
 export * from './pages/healthcare-providers-page.component';

@@ -1,0 +1,176 @@
+<div class="rounded-xl shadow-lg p-12 w-full relative backdrop-blur-md">
+  <div class="text-center mb-10">
+    <h1 class="text-3xl font-bold mb-2 bg-clip-text text-black">
+      Crear cuenta</h1>
+    <p class="text-gray-400 text-base font-normal">Únete a nuestra comunidad</p>
+  </div>
+
+  <form [formGroup]="twoFactorRegistrationForm" (ngSubmit)="twoFactorRegistration()" class="flex flex-col gap-6" id="twoFactorRegistrationForm">
+    <div class="relative">
+      <label class="block mb-2 text-gray-400 text-sm font-medium" for="registerEmail">Correo electrónico</label>
+      <input id="registerEmail" name="email" formControlName="email"
+        class="w-full px-4 py-3 border rounded-lg text-gray-500 text-base transition-all outline-none placeholder:text-gray-500"
+        type="email" placeholder="tu@email.com" required />
+
+      @if (email?.invalid && (email?.dirty || email?.touched)) {
+      <div class="text-red-400 text-xs mt-2">
+        @if (email?.hasError('required')) {
+        <div>El correo es obligatorio.</div>
+        }
+        @if (email?.hasError('email')) {
+        <div>El correo no es válido.</div>
+        }
+      </div>
+      }
+    </div>
+
+    <div class="relative">
+      <label class="block mb-2 text-gray-400 text-sm font-medium" for="registerPassword">Contraseña</label>
+      <input id="registerPassword" name="password" formControlName="password"
+      class="w-full px-4 py-3 border rounded-lg text-gray-500 text-base transition-all outline-none placeholder:text-gray-500"
+      type="password" placeholder="Escribe tu contraseña" required />
+      
+      @if(password?.invalid && password?.touched) {
+        <div class="text-red-400 text-xs mt-2">
+          @if(password?.hasError('required')) {
+            <div>La contraseña es obligatoria.</div>
+          }
+          @if(password?.hasError('minlength')) {
+            <div>Debe tener al menos 6 caracteres.</div>
+          }
+          @if(password?.hasError('maxlength')) {
+            <div>No puede tener más de 50 caracteres.</div>
+          }
+          @if(password?.hasError('passwordStrength')) {
+            <div>Debe contener al menos una mayúscula, una minúscula y un número.</div>
+          }
+        </div>
+      }
+    </div>
+
+    <div class="relative">
+      <label class="block mb-2 text-gray-400 text-sm font-medium" for="confirmPassword">Confirmar contraseña</label>
+      <input id="confirmPassword" name="confirmPassword" formControlName="confirmPassword"
+        class="w-full px-4 py-3 border rounded-lg text-gray-500 text-base transition-all outline-none placeholder:text-gray-500"
+        type="password" placeholder="Repite tu contraseña" required />
+
+      @if(confirmPassword?.invalid && confirmPassword?.touched) {
+      <div class="text-red-400 text-xs mt-2">
+        @if(confirmPassword?.hasError('required')) {
+        <div>Debes confirmar tu contraseña.</div>
+        }
+      </div>
+      }
+
+      @if(twoFactorRegistrationForm.hasError('passwordMismatch') && twoFactorRegistrationForm.touched) {
+      <div class="text-red-400 text-xs mt-2">Las contraseñas no coinciden.</div>
+      }
+    </div>
+
+    <button type="submit"
+      class="flex items-center justify-center px-6 py-3 rounded-lg font-semibold bg-black text-white shadow-md transition disabled:opacity-60 disabled:cursor-not-allowed hover:bg-gray-800 cursor-pointer"
+      id="registerBtn" [disabled]="loading()">
+      {{ loading() ? 'Cargando' : 'Crear cuenta' }}
+    </button>
+  </form>
+
+  <div class="flex items-center justify-center mt-6 gap-2">
+    <span class="text-gray-400 text-sm">¿Ya tienes una cuenta?</span>
+    <button type="button" class="text-black hover:underline text-sm font-semibold cursor-pointer" [routerLink]="['/auth/login']">
+      Iniciar sesión
+    </button>
+  </div>
+
+  @if (showResendConfirmation()) {
+    <div class="text-center mt-4">
+      <button 
+        type="button" 
+        class="text-blue-600 hover:text-blue-800 text-sm font-medium hover:underline cursor-pointer"
+        [routerLink]="['/auth/resend-confirmation']"
+      >
+        ¿No recibiste el código de confirmación?
+      </button>
+    </div>
+  }
+</div>
+
+@if(hasError()) {
+<div role="alert"
+  class="animate-fadeIn fixed bottom-5 right-5 w-52 bg-red-100 text-red-800 border border-red-300 rounded-lg p-4 shadow-md">
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+      d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+  </svg>
+  <span>Por favor revise la información ingresada.</span>
+</div>
+}
+
+@if(showInstructions()) {
+<div class="fixed inset-0 bg-opacity-50 flex items-center justify-center z-50 p-4">
+  <div class="bg-white rounded-xl shadow-2xl max-w-md w-full p-8">
+    <!-- Header -->
+    <div class="text-center mb-6">
+      <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+        <svg class="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+        </svg>
+      </div>
+      <h2 class="text-2xl font-bold text-gray-900 mb-2">¡Registro Exitoso!</h2>
+      <p class="text-gray-600">Hemos enviado un enlace de verificación a tu correo electrónico</p>
+    </div>
+
+    <!-- Instructions -->
+    <div class="mb-6">
+      <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+        <h3 class="font-semibold text-blue-900 mb-2">📧 Instrucciones:</h3>
+        <ol class="text-sm text-blue-800 space-y-2">
+          <li class="flex items-start">
+            <span class="font-semibold mr-2">1.</span>
+            <span>Revisa tu bandeja de entrada en <strong>{{userEmail()}}</strong></span>
+          </li>
+          <li class="flex items-start">
+            <span class="font-semibold mr-2">2.</span>
+            <span>Busca el email de "Confirmar tu Email - Siris Cloud"</span>
+          </li>
+          <li class="flex items-start">
+            <span class="font-semibold mr-2">3.</span>
+            <span>Haz clic en el botón "Confirmar mi Email" o usa el código de verificación</span>
+          </li>
+          <li class="flex items-start">
+            <span class="font-semibold mr-2">4.</span>
+            <span>Completa la configuración de tu empresa</span>
+          </li>
+        </ol>
+      </div>
+
+      <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+        <h4 class="font-semibold text-yellow-900 mb-2">⚠️ Importante:</h4>
+        <p class="text-sm text-yellow-800">
+          El enlace de verificación expira en 24 horas. Si no lo encuentras, revisa tu carpeta de spam.
+        </p>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="text-center mt-4">
+      <button 
+        (click)="hideInstructions()"
+        class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 px-4 rounded-lg transition-colors">
+        Cerrar
+      </button>
+    </div>
+
+    <!-- Help -->
+    <div class="text-center mt-4">
+      <p class="text-sm text-gray-500">
+        ¿No recibiste el email? 
+        <button 
+          (click)="hideInstructions()"
+          class="text-blue-600 hover:underline font-medium">
+          Reenviar confirmación
+        </button>
+      </p>
+    </div>
+  </div>
+</div>
+}

@@ -1,0 +1,312 @@
+<div class="usage-dashboard">
+  <!-- Header Section -->
+  <div class="dashboard-header">
+    <div class="header-content">
+      <h1 class="page-title">Uso</h1>
+      
+      <div class="header-controls">
+        <!-- Project Selector -->
+        <div class="project-selector">
+          <button 
+            class="project-button"
+            disabled>
+            <span class="project-name">{{ projectName }}</span>
+          </button>
+        </div>
+
+        <!-- Date Range Picker -->
+        <div class="date-range-picker">
+          <button class="date-button" (click)="toggleDatePickerModal()">
+            <svg class="calendar-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            </svg>
+            <span class="date-range">{{ formatDate(startDate()) }} - {{ formatDate(endDate()) }}</span>
+            <svg class="dropdown-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="dashboard-content">
+    
+    <!-- Left Side - Chart Section -->
+    <div class="chart-section">
+      <div class="chart-header">
+        <h2 class="chart-title">Uso Total</h2>
+        <div class="chart-controls">
+          <select 
+            [value]="groupBy()" 
+            (change)="onGroupByChange($event)"
+            class="group-by-select">
+            <option value="day">Día</option>
+            <option value="week">Semana</option>
+            <option value="month">Mes</option>
+          </select>
+        </div>
+      </div>
+
+        <div class="spend-display">
+          <div class="current-spend">{{ formatCurrency(getTotalTokens() * 0.00003) }}</div>
+        </div>
+
+      <!-- Chart Area -->
+      <div class="chart-container">
+        @if (loading()) {
+          <div class="chart-loading">
+            <div class="loading-spinner"></div>
+            <span>Cargando datos de uso...</span>
+          </div>
+        } @else if (error()) {
+          <div class="chart-error">
+            <svg class="error-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <span>{{ error() }}</span>
+          </div>
+        } @else {
+          <div class="chart-area">
+            <!-- Baseline -->
+            <div class="baseline"></div>
+            
+            <!-- Data Points -->
+            @for (point of bucketDataPoints(); track point.date) {
+              @if (point.inputTokens > 0) {
+                <div 
+                  class="data-bar"
+                  [style.height.%]="getBarHeight(point.inputTokens)"
+                  [style.left.%]="getBarPosition(point.date)"
+                  (mouseenter)="showTooltipOnHover(point, $event)"
+                  (mouseleave)="hideTooltip()">
+                </div>
+              }
+            }
+            
+            <!-- X-axis Labels -->
+            <div class="x-axis-labels">
+              <span class="axis-label start">{{ formatDate(startDate()) }}</span>
+              <span class="axis-label end">{{ formatDate(endDate()) }}</span>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Right Side - Stats Section -->
+    <div class="stats-section">
+      
+      <!-- Budget Card -->
+      <div class="budget-card">
+        <div class="budget-header">
+          <h3 class="budget-title">Presupuesto Mensual</h3>
+        </div>
+        
+          <div class="budget-content">
+            <div class="budget-amount">
+              {{ formatCurrency(budget()?.budgetUsed || 0) }} / {{ formatCurrency(budget()?.budget || 0) }}
+            </div>
+            
+            <div class="budget-progress">
+              <div 
+                class="progress-bar"
+                [style.width.%]="getBudgetPercentage()"
+                [class]="getBudgetBarClass()">
+              </div>
+            </div>
+          
+          <div class="budget-info">
+            <span class="reset-info">Se reinicia en {{ budget()?.daysUntilReset || 0 }} días.</span>
+            <div class="budget-actions">
+              <button 
+                class="edit-budget-link"
+                (click)="openBudgetEditModal()">
+                Editar presupuesto
+              </button>
+              <button 
+                class="add-alert-link"
+                (click)="openBudgetAlertModal()">
+                Agregar alerta
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Requests Card -->
+      <div class="requests-card">
+        <div class="requests-header">
+          <h3 class="requests-title">Total de solicitudes</h3>
+        </div>
+        
+        <div class="requests-content">
+          <div class="requests-count">{{ getTotalRequests() || 0 }}</div>
+        </div>
+      </div>
+
+      <!-- Chat Completions Card -->
+      <div class="chat-completions-card">
+        <div class="chat-completions-header">
+          <h3 class="chat-completions-title">Chat Completions</h3>
+        </div>
+        
+        <div class="chat-completions-content">
+          <div class="chat-completions-count">{{ getTotalChatCompletions() || 0 }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success/Error Messages -->
+  @if (success()) {
+    <div class="success-message" (click)="clearSuccess()">
+      <svg class="success-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+      </svg>
+      {{ success() }}
+    </div>
+  }
+
+  @if (error()) {
+    <div class="error-message" (click)="clearError()">
+      <svg class="error-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+      {{ error() }}
+    </div>
+  }
+
+  <!-- Date Picker Modal -->
+  @if (showDatePickerModal()) {
+    <div class="modal-overlay" (click)="closeDatePickerModal()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <div class="date-picker-content">
+          <!-- Custom Date Range -->
+          <div class="custom-date-range">
+            <h4 class="preset-title">Rango personalizado</h4>
+            <div class="date-inputs">
+              <div class="date-input-group">
+                <label class="date-label">Desde:</label>
+                <input 
+                  type="date" 
+                  [value]="startDate()"
+                  (change)="onStartDateChange($event)"
+                  class="date-input">
+              </div>
+              <div class="date-input-group">
+                <label class="date-label">Hasta:</label>
+                <input 
+                  type="date" 
+                  [value]="endDate()"
+                  (change)="onEndDateChange($event)"
+                  class="date-input">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Budget Edit Modal -->
+  @if (showBudgetEditModal()) {
+    <div class="modal-overlay" (click)="closeBudgetEditModal()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+          <h3 class="modal-title">Editar presupuesto</h3>
+        </div>
+        
+        <div class="modal-form">
+          <p class="budget-description">
+            Su presupuesto previsto para su organización. Sus costos reales pueden exceder este presupuesto según el uso.
+          </p>
+          
+          <div class="form-group">
+            <label class="form-label">Presupuesto mensual</label>
+            <div class="budget-input-container">
+              <span class="currency-symbol">$</span>
+              <input 
+                type="number" 
+                class="form-input budget-input"
+                [value]="budgetForm().budget"
+                (input)="onBudgetFormChange('budget', $event.target.value)"
+                placeholder="0"
+                min="0"
+                step="0.01">
+            </div>
+          </div>
+          
+          <div class="modal-actions">
+            <button class="btn-cancel" (click)="closeBudgetEditModal()">
+              Cancelar
+            </button>
+            <button class="btn-save" (click)="updateBudget()">
+              Guardar presupuesto
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Budget Alert Modal -->
+  @if (showBudgetAlertModal()) {
+    <div class="modal-overlay" (click)="closeBudgetAlertModal()">
+      <div class="modal-content" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+          <h3 class="modal-title">Agregar alerta de presupuesto</h3>
+        </div>
+        
+        <div class="modal-form">
+          <div class="form-group">
+            <label class="form-label">Alertar cuando el uso del presupuesto exceda</label>
+            <div class="threshold-input-container">
+              <input 
+                type="number" 
+                class="form-input threshold-input"
+                [value]="budgetAlertForm().threshold"
+                (input)="onBudgetAlertFormChange('threshold', $event.target.value)"
+                placeholder="80"
+                min="1"
+                max="100">
+              <span class="percentage-symbol">%</span>
+            </div>
+          </div>
+          
+          <div class="modal-actions">
+            <button class="btn-cancel" (click)="closeBudgetAlertModal()">
+              Cancelar
+            </button>
+            <button class="btn-save" (click)="updateBudgetAlert()">
+              Agregar alerta
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Custom Tooltip -->
+  @if (showTooltip() && tooltipData()) {
+    <div 
+      class="custom-tooltip"
+      [style.left.px]="tooltipData()!.x"
+      [style.top.px]="tooltipData()!.y">
+      <div class="tooltip-content">
+        <div class="tooltip-date">{{ formatFullDate(tooltipData()!.date.toISOString()) }}</div>
+        <div class="tooltip-divider"></div>
+        <div class="tooltip-data">
+          <div class="tooltip-color-indicator"></div>
+          <span class="tooltip-label">all</span>
+          <span class="tooltip-value">{{ formatCurrency(tooltipData()!.inputTokens * 0.00003) }}</span>
+        </div>
+        <div class="tooltip-details">
+          <div>{{ formatNumber(tooltipData()!.inputTokens) }} tokens</div>
+          <div>{{ tooltipData()!.requests }} requests</div>
+        </div>
+      </div>
+    </div>
+  }
+</div>
