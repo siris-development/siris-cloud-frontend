@@ -57,10 +57,8 @@ export class UsageDataComponent implements OnInit {
   // Computed signals for stable values
   bucketDataPoints = computed(() => {
     const buckets = this.usageBuckets();
-    console.log('Computing bucketDataPoints, buckets:', buckets);
     
     const filteredBuckets = buckets.filter(bucket => bucket.results.length > 0);
-    console.log('Filtered buckets with data:', filteredBuckets);
     
     const dataPoints = filteredBuckets.map(bucket => {
       const totalInputTokens = bucket.results.reduce((sum, result) => sum + (result.input_tokens || 0), 0);
@@ -72,11 +70,9 @@ export class UsageDataComponent implements OnInit {
         requests: totalRequests
       };
       
-      console.log('Data point:', dataPoint);
       return dataPoint;
     });
     
-    console.log('Final dataPoints:', dataPoints);
     return dataPoints;
   });
   
@@ -127,6 +123,11 @@ export class UsageDataComponent implements OnInit {
     this.error.set(null);
   }
 
+  clearProject() {
+    // Clear the selected project - you can implement this based on your needs
+    console.log('Clear project clicked');
+  }
+
   async loadChatCompletionsData() {
     try {
       const healthcareProviderId = this.getHealthcareProviderId();
@@ -146,7 +147,6 @@ export class UsageDataComponent implements OnInit {
 
       this.usageService.getCompletionsUsage(params).subscribe({
         next: (data: OpenAIUsagePage) => {
-          console.log('usageData', data);
           this.usagePage.set(data);
           this.usageBuckets.set(data.data || []);
           
@@ -189,10 +189,6 @@ export class UsageDataComponent implements OnInit {
     return this.currentOpenAIUsage()?.totalRequests || 0;
   }
 
-  getTotalTokens(): number {
-    return this.currentOpenAIUsage()?.totalInputTokens || 0;
-  }
-
   getBarHeight(inputTokens: number): number {
     if (!inputTokens || inputTokens <= 0) return 0;
     const maxTokens = this.maxInputTokens();
@@ -226,31 +222,6 @@ export class UsageDataComponent implements OnInit {
 
   getMaxValue(array: number[]): number {
     return Math.max(...array);
-  }
-
-  setPresetDateRange(preset: '7d' | '30d' | '90d' | '1y') {
-    const today = new Date();
-    const startDate = new Date(today);
-    
-    switch (preset) {
-      case '7d':
-        startDate.setDate(today.getDate() - 7);
-        break;
-      case '30d':
-        startDate.setDate(today.getDate() - 30);
-        break;
-      case '90d':
-        startDate.setDate(today.getDate() - 90);
-        break;
-      case '1y':
-        startDate.setFullYear(today.getFullYear() - 1);
-        break;
-    }
-    
-    this.onDateRangeChange(
-      startDate.toISOString().split('T')[0],
-      today.toISOString().split('T')[0]
-    );
   }
 
   onDateRangeChange(startDate: string, endDate: string) {

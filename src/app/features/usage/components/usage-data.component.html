@@ -1,43 +1,45 @@
 <div class="usage-dashboard">
-  <!-- Header Section -->
-  <div class="dashboard-header">
-    <div class="header-content">
-      <h1 class="page-title">Uso</h1>
-      
-      <div class="header-controls">
-        <!-- Project Selector -->
-        <div class="project-selector">
-          <button 
-            class="project-button"
-            disabled>
-            <span class="project-name">{{ projectName }}</span>
-          </button>
-        </div>
-
-        <!-- Date Range Picker -->
-        <div class="date-range-picker">
-          <button class="date-button" (click)="toggleDatePickerModal()">
-            <svg class="calendar-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-            </svg>
-            <span class="date-range">{{ formatDate(startDate()) }} - {{ formatDate(endDate()) }}</span>
-            <svg class="dropdown-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-          </button>
-        </div>
+  <!-- Top Controls -->
+  <div class="top-controls">
+    <!-- Project Selector -->
+    <div class="project-selector">
+      <div class="project-pill">
+        <span class="project-name">{{ projectName }}</span>
+        <button class="close-button" (click)="clearProject()">
+          <svg class="close-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
       </div>
+    </div>
+
+    <!-- Date Range Picker -->
+    <div class="date-range-picker">
+      <button class="date-pill" (click)="toggleDatePickerModal()">
+        <svg class="calendar-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+        </svg>
+        <span class="date-range">{{ formatDate(startDate()) }} - {{ formatDate(endDate()) }}</span>
+        <svg class="dropdown-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 11l5-5m0 0l5 5m-5-5v12"></path>
+        </svg>
+      </button>
     </div>
   </div>
 
   <!-- Main Content -->
   <div class="dashboard-content">
-    
+
     <!-- Left Side - Chart Section -->
     <div class="chart-section">
       <div class="chart-header">
-        <h2 class="chart-title">Uso Total</h2>
+        <div class="spend-display">
+          <h2 class="chart-title">Total Spend</h2>
+          <div class="current-spend">{{ formatCurrency(getTotalChatCompletions() * 0.00003) }}</div>
+          <div class="current-spend-small">{{ formatCurrency(getTotalChatCompletions() * 0.00003) }}</div>
+        </div>
         <div class="chart-controls">
+          <span class="group-by-label">Group by</span>
           <select 
             [value]="groupBy()" 
             (change)="onGroupByChange($event)"
@@ -46,12 +48,9 @@
             <option value="week">Semana</option>
             <option value="month">Mes</option>
           </select>
+          <button class="time-button">1d</button>
         </div>
       </div>
-
-        <div class="spend-display">
-          <div class="current-spend">{{ formatCurrency(getTotalTokens() * 0.00003) }}</div>
-        </div>
 
       <!-- Chart Area -->
       <div class="chart-container">
@@ -101,7 +100,7 @@
       <!-- Budget Card -->
       <div class="budget-card">
         <div class="budget-header">
-          <h3 class="budget-title">Presupuesto Mensual</h3>
+          <h3 class="budget-title">October budget</h3>
         </div>
         
           <div class="budget-content">
@@ -135,25 +134,36 @@
         </div>
       </div>
 
-      <!-- Requests Card -->
+      <!-- Total Tokens Card -->
       <div class="requests-card">
         <div class="requests-header">
-          <h3 class="requests-title">Total de solicitudes</h3>
+          <h3 class="requests-title">Total tokens</h3>
         </div>
         
         <div class="requests-content">
-          <div class="requests-count">{{ getTotalRequests() || 0 }}</div>
+          <div class="requests-count">{{ getTotalChatCompletions() || 0 }}</div>
+          <div class="requests-chart">
+            <div class="requests-line">
+              <div class="requests-point" style="left: 90%; height: 20px;"></div>
+              <div class="requests-point" style="left: 95%; height: 30px;"></div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Chat Completions Card -->
+      <!-- Total Requests Card -->
       <div class="chat-completions-card">
         <div class="chat-completions-header">
-          <h3 class="chat-completions-title">Chat Completions</h3>
+          <h3 class="chat-completions-title">Total requests</h3>
         </div>
         
         <div class="chat-completions-content">
-          <div class="chat-completions-count">{{ getTotalChatCompletions() || 0 }}</div>
+          <div class="chat-completions-count">{{ getTotalRequests() || 0 }}</div>
+          <div class="chat-completions-chart">
+            <div class="chat-completions-line">
+              <div class="chat-completions-point" style="left: 95%; height: 15px;"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
