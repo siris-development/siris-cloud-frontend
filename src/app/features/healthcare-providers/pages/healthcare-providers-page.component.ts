@@ -61,7 +61,7 @@ export class HealthcareProvidersPageComponent implements OnInit {
 
   getTotalConfigurations(): number {
     return this.providers().reduce((total, provider) => {
-      return total + (provider.ptMs?.length || 0);
+      return total;
     }, 0);
   }
 
@@ -71,7 +71,7 @@ export class HealthcareProvidersPageComponent implements OnInit {
   }
 
   getConfigurationsCount(provider: HealthcareProvider): number {
-    return provider.ptMs?.length || 0;
+    return 0;
   }
 
   // Métodos de búsqueda
@@ -129,8 +129,8 @@ export class HealthcareProvidersPageComponent implements OnInit {
       case 'dashboard':
         this.router.navigate(['/dashboard']);
         break;
-      case 'external-ips':
-        this.router.navigate(['/external-ips']);
+      case 'healthcare-provider-configs':
+        this.router.navigate(['/healthcare-providers/configs', provider.id]);
         break;
       case 'whatsapp':
         this.router.navigate(['/whatsapp']);

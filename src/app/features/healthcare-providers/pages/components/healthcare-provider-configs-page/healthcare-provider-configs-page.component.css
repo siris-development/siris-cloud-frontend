@@ -1,0 +1,208 @@
+/* Healthcare Provider Configs Page Styles */
+
+.space-y-6 > * + * {
+  margin-top: 1.5rem;
+}
+
+.space-y-4 > * + * {
+  margin-top: 1rem;
+}
+
+.space-y-2 > * + * {
+  margin-top: 0.5rem;
+}
+
+.space-x-3 > * + * {
+  margin-left: 0.75rem;
+}
+
+.space-x-2 > * + * {
+  margin-left: 0.5rem;
+}
+
+/* Loading spinner animation */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* Hover effects */
+.hover\:bg-blue-700:hover {
+  background-color: rgb(29 78 216);
+}
+
+.hover\:bg-green-700:hover {
+  background-color: rgb(21 128 61);
+}
+
+.hover\:bg-red-50:hover {
+  background-color: rgb(254 242 242);
+}
+
+.hover\:bg-gray-50:hover {
+  background-color: rgb(249 250 251);
+}
+
+.hover\:text-red-600:hover {
+  color: rgb(220 38 38);
+}
+
+.hover\:text-green-600:hover {
+  color: rgb(22 163 74);
+}
+
+/* Focus states */
+.focus\:border-blue-500:focus {
+  border-color: rgb(59 130 246);
+}
+
+.focus\:ring-blue-500:focus {
+  --tw-ring-color: rgb(59 130 246);
+}
+
+.focus\:ring-2:focus {
+  --tw-ring-width: 2px;
+}
+
+.focus\:ring-offset-2:focus {
+  --tw-ring-offset-width: 2px;
+}
+
+.focus\:outline-none:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+/* Transition effects */
+.transition-colors {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+/* Disabled state */
+.disabled\:opacity-50:disabled {
+  opacity: 0.5;
+}
+
+/* Custom scrollbar for textarea */
+textarea::-webkit-scrollbar {
+  width: 6px;
+}
+
+textarea::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+textarea::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+textarea::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Modal backdrop */
+.bg-opacity-50 {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Status indicators */
+.bg-green-400 {
+  background-color: rgb(74 222 128);
+}
+
+.bg-gray-400 {
+  background-color: rgb(156 163 175);
+}
+
+.bg-red-100 {
+  background-color: rgb(254 226 226);
+}
+
+.bg-green-100 {
+  background-color: rgb(220 252 231);
+}
+
+.text-red-800 {
+  color: rgb(153 27 27);
+}
+
+.text-green-800 {
+  color: rgb(22 101 52);
+}
+
+/* Button states */
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+button:not(:disabled) {
+  cursor: pointer;
+}
+
+/* Form validation styles */
+input:invalid, textarea:invalid, select:invalid {
+  border-color: rgb(239 68 68);
+}
+
+input:valid, textarea:valid, select:valid {
+  border-color: rgb(34 197 94);
+}
+
+/* Responsive design */
+@media (max-width: 640px) {
+  .grid-cols-1 {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 768px) {
+  .md\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Animation for status changes */
+.status-change {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Custom focus ring for accessibility */
+.focus\:ring-2:focus {
+  box-shadow: 0 0 0 2px var(--tw-ring-color);
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .border-gray-200 {
+    border-color: rgb(0 0 0);
+  }
+  
+  .text-gray-500 {
+    color: rgb(0 0 0);
+  }
+  
+  .text-gray-700 {
+    color: rgb(0 0 0);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .animate-spin {
+    animation: none;
+  }
+  
+  .transition-colors {
+    transition: none;
+  }
+}

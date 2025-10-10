@@ -41,11 +41,11 @@ export class DeleteConfirmationModalComponent {
 
   get hasConfigurations(): boolean {
     const provider = this.provider();
-    return (provider?.ptMs?.length || 0) > 0;
-  }
+    return provider !== null;
+     }
 
   get configurationsCount(): number {
     const provider = this.provider();
-    return provider?.ptMs?.length || 0;
+    return 0;
   }
 }
