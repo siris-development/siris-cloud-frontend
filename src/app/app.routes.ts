@@ -38,12 +38,6 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./features/healthcare-providers/healthcare-providers.routes').then((m) => m.healthcareProvidersRoutes),
   },
-  {
-    path: 'external-ips',
-    canActivate: [AuthenticatedGuard],
-    loadChildren: () =>
-      import('./features/external-ips/external-ips.routes').then((m) => m.externalIpsRoutes),
-  },
 
   
 ];

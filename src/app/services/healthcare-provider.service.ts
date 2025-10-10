@@ -5,15 +5,14 @@ import { environment } from '../../environments/environment';
 import { ErrorHandlerService } from '../shared/services/error-handler.service';
 import {
   HealthcareProvider,
-  HealthcareProviderConfig,
+
   CreateHealthcareProviderRequest,
   UpdateHealthcareProviderRequest,
-  CreateHealthcareProviderConfigRequest,
-  UpdateHealthcareProviderConfigRequest,
+
   HealthcareProviderResponse,
-  HealthcareProviderConfigResponse,
   ApiResponse,
 } from '@/features';
+import { CreateHealthcareProviderConfigRequest, HealthcareProviderConfig, UpdateHealthcareProviderConfigRequest } from '@/features/healthcare-providers/models/healthcare-provider-config.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -115,12 +114,6 @@ export class HealthcareProviderService {
       .delete<ApiResponse<any>>(
         `${environment.baseUrl}/healthcare-providers/${providerId}`,
         { headers: this.getHeaders() }
-      )
-      .pipe(
-        catchError((error) => {
-          this.errorHandler.showApiError(error);
-          throw error;
-        })
       );
   }
 
@@ -131,9 +124,9 @@ export class HealthcareProviderService {
    */
   createHealthcareProviderConfig(
     data: CreateHealthcareProviderConfigRequest
-  ): Observable<HealthcareProviderConfigResponse> {
+  ): Observable<HealthcareProviderConfig> {
     return this.http
-      .post<HealthcareProviderConfigResponse>(
+      .post<HealthcareProviderConfig>(
         `${environment.baseUrl}/healthcare-providers/configs`,
         data,
         { headers: this.getHeaders() }
@@ -190,11 +183,11 @@ export class HealthcareProviderService {
   updateHealthcareProviderConfig(
     configId: string,
     data: UpdateHealthcareProviderConfigRequest
-  ): Observable<HealthcareProviderConfigResponse> {
+  ): Observable<HealthcareProviderConfig> {
     console.log('data', data);
     console.log('configId', configId);
     return this.http
-      .patch<HealthcareProviderConfigResponse>(
+      .patch<HealthcareProviderConfig>(
         `${environment.baseUrl}/healthcare-providers/${configId}`,
         data,
         { headers: this.getHeaders() }

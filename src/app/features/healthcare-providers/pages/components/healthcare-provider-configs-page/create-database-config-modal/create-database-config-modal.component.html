@@ -1,0 +1,215 @@
+<div class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full z-50">
+  <div class="relative top-10 mx-auto p-6 border w-full max-w-4xl shadow-lg rounded-md bg-white">
+    <div class="flex items-center justify-between mb-6">
+      <h3 class="text-xl font-semibold text-gray-900">Nueva Configuración de Base de Datos</h3>
+      <button
+        (click)="onClose()"
+        class="text-gray-400 hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 rounded-md">
+        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+
+    <form (ngSubmit)="onSubmit()" class="space-y-4">
+      <!-- Sección: Configuración de Base de Datos -->
+      <div class="bg-gray-50 p-3 rounded-lg">
+        <h4 class="text-base font-medium text-gray-800 mb-3 flex items-center">
+          <svg class="h-4 w-4 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4"></path>
+          </svg>
+          Configuración de Microservicio
+        </h4>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <!-- Host -->
+          <div>
+            <label for="dbHost" class="block text-xs font-medium text-gray-700 mb-1">
+              Host *
+            </label>
+            <input
+              type="text"
+              id="dbHost"
+              [(ngModel)]="configForm().dbHost"
+              (ngModelChange)="onFieldChange('dbHost', $event)"
+              name="dbHost"
+              class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm py-1"
+              [class.border-red-300]="hasFieldError('dbHost')"
+              placeholder="168.231.64.244"
+              required>
+            @if (hasFieldError('dbHost')) {
+              <p class="text-xs text-red-600">{{ getFieldError('dbHost') }}</p>
+            }
+          </div>
+
+          <!-- Puerto -->
+          <div>
+            <label for="dbPort" class="block text-xs font-medium text-gray-700 mb-1">
+              Puerto *
+            </label>
+            <input
+              type="number"
+              id="dbPort"
+              [(ngModel)]="configForm().dbPort"
+              (ngModelChange)="onFieldChange('dbPort', $event)"
+              name="dbPort"
+              class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm py-1"
+              [class.border-red-300]="hasFieldError('dbPort')"
+              placeholder="5432"
+              required>
+            @if (hasFieldError('dbPort')) {
+              <p class="text-xs text-red-600">{{ getFieldError('dbPort') }}</p>
+            }
+          </div>
+
+          <!-- Nombre de la Base de Datos -->
+          <div>
+            <label for="dbName" class="block text-xs font-medium text-gray-700 mb-1">
+              Base de Datos *
+            </label>
+            <input
+              type="text"
+              id="dbName"
+              [(ngModel)]="configForm().dbName"
+              (ngModelChange)="onFieldChange('dbName', $event)"
+              name="dbName"
+              class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm py-1"
+              [class.border-red-300]="hasFieldError('dbName')"
+              placeholder="practica"
+              required>
+            @if (hasFieldError('dbName')) {
+              <p class="text-xs text-red-600">{{ getFieldError('dbName') }}</p>
+            }
+          </div>
+
+          <!-- Usuario -->
+          <div>
+            <label for="dbUsername" class="block text-xs font-medium text-gray-700 mb-1">
+              Usuario *
+            </label>
+            <input
+              type="text"
+              id="dbUsername"
+              [(ngModel)]="configForm().dbUsername"
+              (ngModelChange)="onFieldChange('dbUsername', $event)"
+              name="dbUsername"
+              class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm py-1"
+              [class.border-red-300]="hasFieldError('dbUsername')"
+              placeholder="pruebas"
+              required>
+            @if (hasFieldError('dbUsername')) {
+              <p class="text-xs text-red-600">{{ getFieldError('dbUsername') }}</p>
+            }
+          </div>
+
+          <!-- Contraseña -->
+          <div>
+            <label for="dbPassword" class="block text-xs font-medium text-gray-700 mb-1">
+              Contraseña *
+            </label>
+            <input
+              type="password"
+              id="dbPassword"
+              [(ngModel)]="configForm().dbPassword"
+              (ngModelChange)="onFieldChange('dbPassword', $event)"
+              name="dbPassword"
+              class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm py-1"
+              [class.border-red-300]="hasFieldError('dbPassword')"
+              placeholder="Contraseña"
+              required>
+            @if (hasFieldError('dbPassword')) {
+              <p class="text-xs text-red-600">{{ getFieldError('dbPassword') }}</p>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección: Configuración de Servicios -->
+      <div class="bg-blue-50 p-3 rounded-lg">
+        <h4 class="text-base font-medium text-gray-800 mb-3 flex items-center">
+          <svg class="h-4 w-4 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          Servicios
+        </h4>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <!-- Puerto del Microservicio -->
+          <div>
+            <label for="msPort" class="block text-xs font-medium text-gray-700 mb-1">
+              Puerto Microservicio
+            </label>
+            <input
+              type="number"
+              id="msPort"
+              [(ngModel)]="configForm().msPort"
+              (ngModelChange)="onFieldChange('msPort', $event)"
+              name="msPort"
+              class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm py-1"
+              [class.border-red-300]="hasFieldError('msPort')"
+              placeholder="3000">
+            @if (hasFieldError('msPort')) {
+              <p class="text-xs text-red-600">{{ getFieldError('msPort') }}</p>
+            }
+          </div>
+
+          <!-- URL del Bot de IA -->
+          <div>
+            <label for="urlBotIa" class="block text-xs font-medium text-gray-700 mb-1">
+              URL Bot IA
+            </label>
+            <input
+              type="url"
+              id="urlBotIa"
+              [(ngModel)]="configForm().urlBotIa"
+              (ngModelChange)="onFieldChange('urlBotIa', $event)"
+              name="urlBotIa"
+              class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-sm py-1"
+              [class.border-red-300]="hasFieldError('urlBotIa')"
+              placeholder="https://bot-ia.example.com">
+            @if (hasFieldError('urlBotIa')) {
+              <p class="text-xs text-red-600">{{ getFieldError('urlBotIa') }}</p>
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- Sección: Estado y Botones -->
+      <div class="flex items-center justify-between pt-4 border-t border-gray-200">
+        <div class="flex items-center">
+          <input
+            type="checkbox"
+            id="isActive"
+            [(ngModel)]="configForm().isActive"
+            (ngModelChange)="onFieldChange('isActive', $event)"
+            name="isActive"
+            class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded">
+          <label for="isActive" class="ml-2 text-sm text-gray-900">
+            Configuración activa
+          </label>
+        </div>
+        
+        <div class="flex space-x-3">
+          <button
+            type="button"
+            (click)="onClose()"
+            class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded-md text-sm font-medium transition-colors">
+            Cancelar
+          </button>
+          <button
+            type="submit"
+            [disabled]="loading()"
+            class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors disabled:opacity-50">
+            @if (loading()) {
+              <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white inline" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Creando...
+            } @else {
+              Crear
+            }
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

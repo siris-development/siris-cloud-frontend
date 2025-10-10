@@ -151,6 +151,6 @@ export class HealthcareProviderListComponent implements OnInit {
   }
 
   getConfigurationsCount(provider: HealthcareProvider): number {
-    return provider.ptMs?.length || 0;
+    return 0;
   }
 }
