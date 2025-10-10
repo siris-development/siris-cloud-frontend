@@ -145,8 +145,7 @@ export class HealthcareProviderModalComponent {
 
   createProvider() {
     const data: CreateHealthcareProviderRequest = {
-      ...this.formData(),
-      tenantId: this.authService.currentTenant()?.id || ''
+      ...this.formData()
     };
 
     this.healthcareProviderService.createHealthcareProvider(data).subscribe({
